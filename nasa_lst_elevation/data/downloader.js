@@ -1,4 +1,3 @@
-
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
@@ -7,10 +6,12 @@ const exec = util.promisify(require('child_process').exec);
 const INTERVAL_RATE = 500;
 const links = fs.readFileSync(path.join(__dirname, '../download-links.txt'), 'utf8').split(/\n|\r/).filter(notEmpty => notEmpty);
 
+const FIRST_FILE_NUM = 0;
+
 module.exports = {
     downloadAllFiles: async () => {
 
-        let fileNum = 0;
+        let fileNum = FIRST_FILE_NUM;
         let intervalPtr = setInterval(() => {
             runCmd(fileNum);
             fileNum++;
@@ -25,8 +26,6 @@ module.exports = {
         // runCmd(downloadCommand);
     }
 }
-
-module.exports.downloadAllFiles();
 
 async function runCmd(fileNum) {
     console.log(Math.round(fileNum / links.length * 10000) / 100 + "%");

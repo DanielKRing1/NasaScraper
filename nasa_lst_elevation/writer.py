@@ -11,21 +11,19 @@ directory = "C:\\Users\\Danie\\Desktop\\Topics\\Bots\\nasa\\nasa_lst_elevation\\
 files = os.listdir(directory)
 
 
-BATCH_SIZE = 500
-
 def processFiles():
     totalFiles = len(files)
     fileNum = 0
     
-    elevationData = {}
+    elevationData = []
     
     while(fileNum < totalFiles):
         try:
             hdf5 = openFile(fileNum)
             data = parseData(hdf5)
-            hdf5.close();
+            hdf5.close()
         
-            addDataToObj(data, elevationData, fileNum)
+            addDataToList(data, elevationData)
         except:
             print("ERROR in file ", fileNum)
             
@@ -36,6 +34,7 @@ def processFiles():
         json.dump(elevationData, outfile)
         
     print("Done!")
+    sys.stdout.flush()
 
 def openFile(fileNum):
 #     print(fileNum / len(files) * 100, "%")
@@ -71,19 +70,16 @@ def parseData(fileData):
         }
     }
 
-def addDataToObj(data, obj, fileNum):
-    swIndex = fileNum * 2
-    neIndex = fileNum * 2 + 1
-        
-    obj[swIndex] = {
+def addDataToList(data, list):        
+    list.append({
         'lat': str(data['sw']['lat']),
         'long': str(data['sw']['long']),
         'elevation': str(data['sw']['elevation'])
-    }
-    obj[neIndex] = {
+    })
+    list.append({
         'lat': str(data['ne']['lat']),
         'long': str(data['ne']['long']),
         'elevation': str(data['ne']['elevation'])
-    }    
+    })
     
 processFiles()

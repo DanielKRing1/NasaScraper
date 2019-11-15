@@ -132,32 +132,50 @@ const lcFormats = {
 }
 
 module.exports = {
-    grabData: async (dataDirectory) => {
+    writeLCData: async (dataDirectory) => {
         const dataFiles = fs.readdirSync(dataDirectory);
 
-        // dataFiles.forEach(async (fileName) => {
+        let counter = 1;
+        const allLCData = await Promise.all(dataFiles.map(async fileName => {
+            const relevantData = await parseRelevantData(dataDirectory, fileName);
 
-        const fileName = dataFiles[55];
+            console.log(counter / dataFiles.length * 100 + '%');
+            counter++;
+            return relevantData;
+        }));
 
-        const coordinateData = await getCoordinateData(dataDirectory, fileName);
-        // printObj(coordinateData)
-        const formattedCoordinateData = formatCoordinateData(coordinateData);
-        printObj(formattedCoordinateData);
+        const json = JSON.stringify(allLCData);
+        fs.writeFileSync('./nasa_land_cover/land-cover-data.json', json, 'utf8');
 
-        const lcData = await getLandCoverData(dataDirectory, fileName);
-        // printObj(lcData);
-        console.log('----')
-
-        const formattedLCData = formatLCData(lcData);
-        printObj(formattedLCData);
-
-        // });
+        console.log('Done writing Land Cover data!');
     }
+}
+
+const parseRelevantData = async (dataDirectory, fileName) => {
+
+    const coordinateData = await getCoordinateData(dataDirectory, fileName);
+    // printObj(coordinateData)
+    const formattedCoordinateData = formatCoordinateData(coordinateData);
+    // printObj(formattedCoordinateData);
+
+    const lcData = await getLandCoverData(dataDirectory, fileName);
+    // printObj(lcData);
+
+    const formattedLCData = formatLCData(lcData);
+    // printObj(formattedLCData);
+
+    const relevantData = {
+        ...formattedCoordinateData,
+        ...formattedLCData
+    }
+
+    return relevantData;
 }
 
 
 const getCoordinateData = async (dataDirectory, fileName) => {
     const ldopeMetaDataCmd = `${process.env.read_meta} ${dataDirectory}${fileName}`;
+    // console.log(ldopeMetaDataCmd)
     const metaData = (await runCmd(ldopeMetaDataCmd)).toLowerCase().split('\n');
 
     const coordinateLines = metaData.filter(line => line.includes('coordinate'));
