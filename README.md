@@ -13,8 +13,8 @@ Add these 2 files to the "nasa_lst_elevation" directory.
 Running the index.js file will download all the files. ~10 GB
 
 <b>Purpose</b><br>
-I have come up empty handed with a public GeoLocation API that offers high throughput for free.<br>
-I intend these scripts to help me create one (but it probably won't be public).<br>
+I have come up empty handed when searching for a public GeoLocation API that offers high throughput for free.<br>
+I intend these scripts to help me create one (but it probably won't be public).<br><br>
 This directory is meant to provide a template for quickly downloading semi-specific NASA data and write it to JSON files.
 It currently does well with the AG1km data.
 However, my ultimate goal is to compile multiple datasets into a single general, ~low accuracy PostgreSQL database.<br>
