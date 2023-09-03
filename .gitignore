@@ -8,3 +8,4 @@
 /nasa_land_cover/download-links.txt
 /nasa_land_cover/data/*.hdf
 /nasa_land_cover/h5-data/*.h5
+/mysql-to-pgsql/node_modules
