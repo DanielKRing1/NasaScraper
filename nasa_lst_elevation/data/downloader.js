@@ -27,13 +27,15 @@ module.exports = {
     }
 }
 
+module.exports.downloadAllFiles();
+
 async function runCmd(fileNum) {
     console.log(Math.round(fileNum / links.length * 10000) / 100 + "%");
     
     const link = links[fileNum];
     const fileName = link.slice(link.lastIndexOf('/') + 1);
     
-    const downloadCommand = `curl -f -b "../cookies.tWMoSsbKhU" -c "../cookies.tWMoSsbKhU" -L --netrc-file "../netrc.ln2OhWdY2S" -g -o ${fileName} -- ${link}`;
+    const downloadCommand = `curl -f -b "../cookies.gVdrvknhG5" -c "../cookies.gVdrvknhG5" -L --netrc-file "../netrc.JPT2l5PRUq" -g -o ${fileName} -- ${link}`;
     try {
 
         const { stdout, stderr } = await exec(downloadCommand);
@@ -42,6 +44,7 @@ async function runCmd(fileNum) {
 
 
     }catch(err) {
+        console.log(err);
         if(fileNum < links.length){
             setTimeout(() => runCmd(fileNum), INTERVAL_RATE);
         }

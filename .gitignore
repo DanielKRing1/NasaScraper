@@ -1,9 +1,10 @@
 /node_modules
 .env
-/nasa_lst_elevation/cookies.tWMoSsbKhU
-/nasa_lst_elevation/netrc.ln2OhWdY2S
+/nasa_lst_elevation/cookies.*
+/nasa_lst_elevation/netrc.*
 /nasa_lst_elevation/download-links.txt
 /nasa_lst_elevation/data/*.h5
 
 /nasa_land_cover/download-links.txt
 /nasa_land_cover/data/*.hdf
+/nasa_land_cover/h5-data/*.h5

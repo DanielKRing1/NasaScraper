@@ -135,12 +135,12 @@ module.exports = {
     writeLCData: async (dataDirectory) => {
         const dataFiles = fs.readdirSync(dataDirectory);
 
-        let counter = 1;
+        let percentCounter = 1;
         const allLCData = await Promise.all(dataFiles.map(async fileName => {
             const relevantData = await parseRelevantData(dataDirectory, fileName);
 
-            console.log(counter / dataFiles.length * 100 + '%');
-            counter++;
+            console.log(percentCounter / dataFiles.length * 100 + '%');
+            percentCounter++;
             return relevantData;
         }));
 
